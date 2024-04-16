@@ -6,10 +6,17 @@ import {
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./firebaseConfig";
 import Registration from "./pages/Registration";
+import Login from "./pages/Login";
 
 const router = createBrowserRouter(
-  createRoutesFromElements(<Route path="/" element={<Registration />}></Route>)
+  createRoutesFromElements(
+    <Route>
+      <Route path="/" element={<Registration />}></Route>
+      <Route path="/login" element={<Login />}></Route>
+    </Route>
+  )
 );
 
 function App() {
