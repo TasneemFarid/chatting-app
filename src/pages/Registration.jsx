@@ -6,14 +6,16 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import React, { useState } from "react";
 import { Puff } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import RegImg from "../assets/reg.png";
+
+const MyInput = styled(TextField)(({ theme }) => ({
+  width: "80%",
+  marginBottom: "34px",
+}));
 
 const Registration = () => {
   let navigate = useNavigate();
-  const MyInput = styled(TextField)(({ theme }) => ({
-    width: "80%",
-    marginBottom: "34px",
-  }));
 
   const MyButton = styled(Button)({
     backgroundColor: "#5F35F5",
@@ -28,10 +30,12 @@ const Registration = () => {
     fullname: "",
     password: "",
   });
+
   let [loader, setLoader] = useState(false);
 
   let handleChange = (e) => {
     setRegdata({ ...regdata, [e.target.name]: e.target.value });
+    console.log(regdata)
   };
 
   let handleSubmit = () => {
@@ -44,20 +48,19 @@ const Registration = () => {
           fullname: "",
           password: "",
         });
-        navigate("/login")
+        navigate("/login");
         setLoader(false);
       })
       .catch((error) => {
         const errorCode = error.code;
+        setLoader(false);
         console.log(errorCode);
         if (errorCode.includes("email")) {
           toast("Email already in use!");
         }
-
         if (errorCode.includes("weak")) {
           toast("Password must be atleast 6 characters!");
         }
-        setLoader(false);
       });
 
     // if (regdata.email == "") {
